@@ -1,0 +1,19 @@
+{
+  "name": "gamebase",
+  "version": "1.0.0",
+  "description": "Basic project structure for developing games on mkv25.net",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mkv25-games/gamebase.git"
+  },
+  "author": "John Beech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkv25-games/gamebase/issues"
+  },
+  "homepage": "https://github.com/mkv25-games/gamebase#readme"
+}

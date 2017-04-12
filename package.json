@@ -5,6 +5,7 @@
   "main": "start.js",
   "scripts": {
     "start": "node start.js",
+    "watch": "nodemon --watch src --ignore build build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +20,8 @@
   "homepage": "https://github.com/mkv25-games/gamebase#readme",
   "devDependencies": {
     "express": "^4.15.2",
-    "phaser": "^2.6.2"
+    "nodemon": "^1.11.0",
+    "phaser": "^2.6.2",
+    "promise-path": "^1.2.3"
   }
 }

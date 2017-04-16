@@ -21,7 +21,6 @@
   "devDependencies": {
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
-    "phaser": "^2.6.2",
     "promise-path": "^1.2.3"
   }
 }

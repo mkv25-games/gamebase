@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Basic project structure for developing games on mkv25.net",
   "main": "start.js",
+  "gamebase": {
+    "title": "Gamebase Example"
+  },
   "scripts": {
     "start": "node start.js",
-    "watch": "nodemon --watch src --ignore build build.js",
+    "watch": "nodemon --ext js,json,html --watch src --ignore build build.js --include *.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

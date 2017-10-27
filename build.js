@@ -1,31 +1,39 @@
-const run = require('promise-path').run
-const read = require('promise-path').read
-const write = require('promise-path').write
+const path = require('path')
+const { find, read, run, write } = require('promise-path')
+const runStep = (command) => {
+  console.log('[Build] Running ', command)
+  return run(command)
+}
 
 const config = require('./package.json')
 
-const makeDirectory = () => run('mkdir build')
-const copyImageAssets = () => run('cp -r src/assets/images build/')
-const copyJavaScript = () => run('cp -r src/js build/')
-const copyHTML = () => run('cp -r src/*.html build/')
-const report = () => console.log('Build complete')
+const apply = f => l => l.map(f)
+const makeDirectory = () => runStep('mkdir build')
+const copyFiles = (file) => runStep(`cp ${file} build`)
+const copyImageAssets = () => runStep('cp -r src/assets/images build/')
+const copyJavaScript = () => runStep('cp -r src/js build/')
+const copyHTML = () => find('src/*.html').then(apply(copyFiles))
+const findHTML = () => find('build/*.html')
+const report = () => console.log('[Build] Build complete')
+const errors = (ex) => console.error('[Build] Unable to build', ex)
 const startWebServer = () => require('./start')
-const errors = (ex) => console.error('Unable to build', ex)
 
-const replaceGameTitle = (contents) => contents.replace('{{GAME_TITLE}}', config.name)
+const replaceGameTitle = (contents) => contents.replace(/{{GAME_TITLE}}/g, config.gamebase.title)
 
-function replaceStrings() {
-    return read('build/game.html', 'utf8')
-        .then(replaceGameTitle)
-        .then((contents) => write('build/game.html', contents, 'utf8'))
+
+function replaceStrings(filepath) {
+  return read(filepath, 'utf8')
+    .then(replaceGameTitle)
+    .then(contents => write(filepath, contents, 'utf8'))
 }
 
 run('rm -rf build')
-    .then(makeDirectory)
-    .then(copyImageAssets)
-    .then(copyJavaScript)
-    .then(copyHTML)
-    .then(replaceStrings)
-    .then(report)
-    .then(startWebServer)
-    .catch(errors)
+  .then(makeDirectory)
+  .then(copyImageAssets)
+  .then(copyJavaScript)
+  .then(copyHTML)
+  .then(findHTML)
+  .then(apply(replaceStrings))
+  .then(report)
+  .then(startWebServer)
+  .catch(errors)

@@ -1,4 +1,3 @@
-const path = require('path')
 const { find, read, run, write } = require('promise-path')
 const runStep = (command) => {
   console.log('[Build] Running ', command)
@@ -20,8 +19,7 @@ const startWebServer = () => require('./start')
 
 const replaceGameTitle = (contents) => contents.replace(/{{GAME_TITLE}}/g, config.gamebase.title)
 
-
-function replaceStrings(filepath) {
+function replaceStrings (filepath) {
   return read(filepath, 'utf8')
     .then(replaceGameTitle)
     .then(contents => write(filepath, contents, 'utf8'))

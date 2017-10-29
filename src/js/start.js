@@ -3,10 +3,26 @@
 $(function() {
   let logo
 
-  let game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload, create, update, render})
+  let game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {preload, create, update, render})
 
   function preload() {
+    game.scale.forceOrientation(true, false)
+    game.scale.enterIncorrectOrientation.add(handleIncorrect)
+    game.scale.leaveIncorrectOrientation.add(handleCorrect)
+
     game.load.image('logo', 'images/phaser.png')
+  }
+
+  function handleIncorrect() {
+    document.getElementById('rotate').style.display = 'block';
+    document.getElementById('game').style.display = 'none';
+    game.paused = true;
+  }
+
+  function handleCorrect() {
+    document.getElementById('game').style.display = 'block';
+    document.getElementById('rotate').style.display = 'none';
+    game.paused = false;
   }
 
   function create() {
@@ -19,11 +35,14 @@ $(function() {
 
     game.input.onDown.add(() => {
       toggleFullscreen(game)
+      game.add.tween(logo).to({
+        angle: Math.floor(logo.angle / 90) * 90 + 90
+      }).start()
     }, this)
 
     $(window).resize(() => resize())
 
-    setTimeout(resize, 500, game)
+    resize()
   }
 
   function update() {}

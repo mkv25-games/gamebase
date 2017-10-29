@@ -1,11 +1,11 @@
 /* eslint-env jquery */
-/* global Phaser, Element */
-$(function() {
+/* global Phaser */
+$(function () {
   let logo
 
   let game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {preload, create, update, render})
 
-  function preload() {
+  function preload () {
     game.scale.forceOrientation(true, false)
     game.scale.enterIncorrectOrientation.add(handleIncorrect)
     game.scale.leaveIncorrectOrientation.add(handleCorrect)
@@ -13,33 +13,28 @@ $(function() {
     game.load.image('logo', 'images/phaser.png')
   }
 
-  function handleIncorrect() {
-    document.getElementById('rotate').style.display = 'block';
-    document.getElementById('game').style.display = 'none';
-    game.paused = true;
+  function handleIncorrect () {
+    document.getElementById('rotate').style.display = 'block'
+    document.getElementById('game').style.display = 'none'
+    game.paused = true
   }
 
-  function handleCorrect() {
-    document.getElementById('game').style.display = 'block';
-    document.getElementById('rotate').style.display = 'none';
-    game.paused = false;
+  function handleCorrect () {
+    document.getElementById('game').style.display = 'block'
+    document.getElementById('rotate').style.display = 'none'
+    game.paused = false
   }
 
-  function create() {
+  function create () {
     logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo')
     logo.anchor.setTo(0.5, 0.5)
     logo.scale.setTo(1.0, 1.0)
 
-    game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
-    game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
+    game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE
 
-    const upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    const downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    const leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    const rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-    const fullscreenKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
-    fullscreenKey.onDown.add(toggleFullscreen, this);
+    const fullscreenKey = game.input.keyboard.addKey(Phaser.Keyboard.F)
+    fullscreenKey.onDown.add(toggleFullscreen, this)
 
     game.input.onDown.add(() => {
       game.add.tween(logo).to({
@@ -52,14 +47,14 @@ $(function() {
     resize()
   }
 
-  function update() {}
+  function update () {}
 
-  function render() {
+  function render () {
     game.debug.cameraInfo(game.camera, 32, 32)
     game.debug.spriteCoords(logo, 32, 500)
   }
 
-  function toggleFullscreen() {
+  function toggleFullscreen () {
     if (game.scale.isFullScreen) {
       game.scale.stopFullScreen()
     } else {
@@ -67,7 +62,7 @@ $(function() {
     }
   }
 
-  function resize() {
+  function resize () {
     const width = $(window).width()
     const height = $(window).height()
     game.scale.setGameSize(width, height)

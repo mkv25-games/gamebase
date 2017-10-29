@@ -33,8 +33,15 @@ $(function() {
     game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
 
+    const upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+    const downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    const leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    const rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
+    const fullscreenKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
+    fullscreenKey.onDown.add(toggleFullscreen, this);
+
     game.input.onDown.add(() => {
-      toggleFullscreen(game)
       game.add.tween(logo).to({
         angle: Math.floor(logo.angle / 90) * 90 + 90
       }).start()

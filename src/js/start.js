@@ -42,6 +42,13 @@ $(function() {
   }
 
   function resize() {
-    game.scale.setGameSize($(window).width(), $(window).height())
+    const width = $(window).width()
+    const height = $(window).height()
+    game.scale.setGameSize(width, height)
+    game.world.width = width
+    game.world.height = height
+
+    logo.x = game.world.centerX
+    logo.y = game.world.centerY
   }
 })

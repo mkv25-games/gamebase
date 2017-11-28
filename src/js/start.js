@@ -1,16 +1,29 @@
 /* eslint-env jquery */
 /* global Phaser */
 $(function () {
-  let logo
+  const sprites = {}
+  const gamebase = Object.assign({
+    assets: {
+      logo: 'images/phaser.png'
+    },
+    sprites
+  }, window.gamebase || {})
 
-  let game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {preload, create, update, render})
+  const game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {preload, create, update, render})
+
+  function loadImages(obj) {
+    Object.keys(obj).forEach(key => {
+      const value = obj[key]
+      game.load.image(key, value)
+    })
+  }
 
   function preload () {
     game.scale.forceOrientation(true, false)
     game.scale.enterIncorrectOrientation.add(handleIncorrect)
     game.scale.leaveIncorrectOrientation.add(handleCorrect)
 
-    game.load.image('logo', 'images/phaser.png')
+    loadImages(gamebase.assets)
   }
 
   function handleIncorrect () {
@@ -26,21 +39,15 @@ $(function () {
   }
 
   function create () {
-    logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo')
-    logo.anchor.setTo(0.5, 0.5)
-    logo.scale.setTo(1.0, 1.0)
+    sprites['logo'] = game.add.sprite(game.world.centerX, game.world.centerY, 'logo')
+    sprites['logo'].anchor.setTo(0.5, 0.5)
+    sprites['logo'].scale.setTo(1.0, 1.0)
 
     game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE
 
     const fullscreenKey = game.input.keyboard.addKey(Phaser.Keyboard.F)
     fullscreenKey.onDown.add(toggleFullscreen, this)
-
-    game.input.onDown.add(() => {
-      game.add.tween(logo).to({
-        angle: Math.floor(logo.angle / 90) * 90 + 90
-      }).start()
-    }, this)
 
     $(window).resize(() => resize())
 
@@ -51,7 +58,7 @@ $(function () {
 
   function render () {
     game.debug.cameraInfo(game.camera, 32, 32)
-    game.debug.spriteCoords(logo, 32, 500)
+    game.debug.spriteCoords(sprites['logo'], 32, 500)
   }
 
   function toggleFullscreen () {
@@ -69,7 +76,9 @@ $(function () {
     game.world.width = width
     game.world.height = height
 
-    logo.x = game.world.centerX
-    logo.y = game.world.centerY
+    sprites['logo'].x = game.world.centerX
+    sprites['logo'].y = game.world.centerY
   }
+
+  return game
 })

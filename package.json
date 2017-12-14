@@ -28,6 +28,7 @@
     "promise-path": "^1.2.3"
   },
   "dependencies": {
+    "promise-path": "^1.2.6",
     "standard": "^10.0.3"
   }
 }

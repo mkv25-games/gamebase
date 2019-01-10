@@ -3,11 +3,26 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>{{GAME_TITLE}} - mkv25.net games</title>
+    <title>{{GAME.TITLE}} - mkv25.net games</title>
+    <style>
+        html, body {
+            padding: 10px;
+            margin: 10px;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        a {
+          color: white;
+        }
+        a:hover {
+          color: {{GAME.COLOR.PRIMARY}}
+        }
+    </style>
 </head>
 
 <body>
-    <h1>{{GAME_TITLE}}</h1>
+    <h1>{{GAME.TITLE}}</h1>
     <p><a href="game.html">Play the game!</a></p>
     <p>Or find out more info :)</p>
 </body>

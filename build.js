@@ -19,12 +19,14 @@ const report = () => console.log('[Build] Build complete')
 const errors = (ex) => console.error('[Build] Unable to build', ex)
 const startWebServer = () => require('./start')
 
-const replaceGameTitle = (contents) => contents.replace(/{{GAME_TITLE}}/g, config.gamebase.title)
+const replaceGameTitle = (contents) => contents.replace(/{{GAME.TITLE}}/g, config.gamebase.title)
+const replaceColors = (contents) => contents.replace(/{{GAME.COLOR.PRIMARY}}/g, config.gamebase.colors.primary)
 
 function replaceStrings (filepath) {
   console.log('Replacing strings in', filepath)
   return read(filepath, 'utf8')
     .then(replaceGameTitle)
+    .then(replaceColors)
     .then(contents => write(filepath.replace('src', 'build'), contents, 'utf8'))
 }
 

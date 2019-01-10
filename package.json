@@ -4,7 +4,10 @@
   "description": "Basic project structure for developing games on mkv25.net",
   "main": "start.js",
   "gamebase": {
-    "title": "Gamebase Example"
+    "title": "Gamebase Example",
+    "colors": {
+      "primary": "#DDFF99"
+    }
   },
   "scripts": {
     "start": "node start.js",

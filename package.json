@@ -26,11 +26,12 @@
   },
   "homepage": "https://github.com/mkv25-games/gamebase#readme",
   "devDependencies": {
-    "express": "^4.15.2",
-    "nodemon": "^1.11.0",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9",
     "promise-path": "^1.2.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "promise-path": "^1.2.6",
     "standard": "^10.0.3"
   }

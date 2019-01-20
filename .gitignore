@@ -1,3 +1,8 @@
 node_modules
 *.log
+.DS_Store
 build
+dev.chain.pem
+dev.key.pem
+gamebase.dev.crt
+gamebase.dev.key

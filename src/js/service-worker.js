@@ -1,47 +1,51 @@
-var cacheName = 'gamebase-service-id'
-var filesToCache = [
+const cacheName = 'gamebase-service-id'
+const filesToCache = [
   '/',
   '/index.html',
-  'js/app.js',
-  'js/start.js',
-  'images/favicon.png',
-  'images/icons-192.png',
-  'images/icons-512.png',
-  'images/phaser.png',
+  '/js/app.js',
+  '/js/start.js',
+  '/images/favicon.png',
+  '/images/icons-192.png',
+  '/images/icons-512.png',
+  '/images/phaser.png',
   '//code.jquery.com/jquery-3.2.1.slim.min.js',
   '//cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.9.1/phaser.min.js'
 ]
 
-self.addEventListener('install', function(e) {
-  console.log('[Gamebase Service Worker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[Gamebase Service Worker] Caching app shell')
-      return cache.addAll(filesToCache)
-    })
-  )
-})
+function serviceWorkerReport(...messages) {
+  console.log('[Gamebase Service Worker]', ...messages)
+}
 
-self.addEventListener('activate', function(e) {
-  console.log('[Gamebase Service Worker] Activate')
-  e.waitUntil(
+self.addEventListener('install', function(event) {
+  // Perform install steps
+  serviceWorkerReport('Install');
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      serviceWorkerReport('Caching app shell');
+      return cache.addAll(filesToCache);
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  serviceWorkerReport('Activate');
+  event.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
         if (key !== cacheName) {
-          console.log('[Gamebase Service Worker] Removing old cache', key)
-          return caches.delete(key)
+          serviceWorkerReport('Removing old cache shell', key);
+          return caches.delete(key);
         }
-      }))
+      }));
     })
-  )
-  return self.clients.claim()
-})
+  );
+});
 
-self.addEventListener('fetch', function(e) {
-  console.log('[ServiceWorker] Fetch', e.request.url)
-  e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request)
+self.addEventListener('fetch', (event) => {
+  serviceWorkerReport('Fetch');
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
     })
-  )
-})
+  );
+});

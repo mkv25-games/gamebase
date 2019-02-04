@@ -6,3 +6,4 @@ dev.chain.pem
 dev.key.pem
 gamebase.dev.crt
 gamebase.dev.key
+deploy/.ftppass

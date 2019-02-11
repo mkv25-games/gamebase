@@ -16,7 +16,7 @@ const defaultConfig = {
   host: FTP_HOST,
   port: 21,
   localRoot: path.join(__dirname, '../build'),
-  remoteRoot: '/latest',
+  remoteRoot: '/',
   // include: ['*', '**/*'],      // this would upload everything except dot files
   include: [], // ['*.php', 'dist/*'],
   exclude: ['.ftp*', '.git*', '.hta*', 'deploy', '*.fdproj', 'tasklist.md', 'readme.md', '.sublime', 'secret.config.php'], // ['dist/**/*.map'], // e.g. exclude sourcemaps - ** exclude: [] if nothing to exclude **
